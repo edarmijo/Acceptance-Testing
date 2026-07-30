@@ -22,3 +22,12 @@ Feature: Inventory Manager
       | P001 | Coffee | 2.50  | 10       |
     When the user updates the quantity of "Coffee" to 25
     Then the inventory should show product "Coffee" with quantity 25
+
+  Scenario: Remove a product from the inventory
+    Given the inventory contains the following products:
+      | ID   | Name   | Price | Quantity |
+      | P001 | Coffee | 2.50  | 10       |
+      | P002 | Sugar  | 1.20  | 5        |
+    When the user removes the product "Coffee"
+    Then the inventory should not contain "Coffee"
+
