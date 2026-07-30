@@ -1,0 +1,42 @@
+Feature: Inventory Manager
+
+  Scenario: Add a product to the inventory
+    Given the inventory is empty ... passed in 0.001s
+    When the user adds a product with ID "P001" named "Coffee" with price 2.50 and quantity 10 ... passed in 0.001s
+    Then the inventory should contain a product named "Coffee" ... passed in 0.000s
+
+  Scenario: List all products in the inventory
+    Given the inventory contains the following products: ... passed in 0.002s
+      | ID   | Name   | Price | Quantity |
+      | P001 | Coffee | 2.50  | 10       |
+      | P002 | Sugar  | 1.20  | 5        |
+    When the user lists all products ... passed in 0.000s
+    Then the output should contain "Coffee" ... passed in 0.000s
+    And the output should contain "Sugar" ... passed in 0.000s
+
+  Scenario: Update the quantity of a product
+    Given the inventory contains the following products: ... passed in 0.001s
+      | ID   | Name   | Price | Quantity |
+      | P001 | Coffee | 2.50  | 10       |
+    When the user updates the quantity of "Coffee" to 25 ... passed in 0.000s
+    Then the inventory should show product "Coffee" with quantity 25 ... passed in 0.000s
+
+  Scenario: Remove a product from the inventory
+    Given the inventory contains the following products: ... passed in 0.000s
+      | ID   | Name   | Price | Quantity |
+      | P001 | Coffee | 2.50  | 10       |
+      | P002 | Sugar  | 1.20  | 5        |
+    When the user removes the product "Coffee" ... passed in 0.001s
+    Then the inventory should not contain "Coffee" ... passed in 0.000s
+
+  Scenario: Search for products by name keyword
+    Given the inventory contains the following products: ... passed in 0.000s
+      | ID   | Name      | Price | Quantity |
+      | P001 | Coffee    | 2.50  | 10       |
+      | P002 | Cold Brew | 3.50  | 3        |
+      | P003 | Sugar     | 1.20  | 5        |
+    When the user searches for products with keyword "Co" ... passed in 0.000s
+    Then the search results should contain 2 products ... passed in 0.000s
+    And the search results should include "Coffee" ... passed in 0.000s
+    And the search results should include "Cold Brew" ... passed in 0.000s
+
