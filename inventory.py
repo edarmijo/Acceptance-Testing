@@ -45,3 +45,20 @@ class InventoryManager:
             del self.inventory[product.product_id]
             return f"Product '{product.name}' was removed."
         return f"Product '{name_or_id}' was not found."
+    
+    def search_product(self, name_query: str) -> list:
+        """Requirement 5 (Added Feature): Search product by name keyword"""
+        results = [
+            prod for prod in self.inventory.values() 
+            if name_query.lower() in prod.name.lower()
+        ]
+        return results
+
+    def _find_product(self, name_or_id: str):
+        """Helper function to look up products by ID or Name"""
+        if name_or_id in self.inventory:
+            return self.inventory[name_or_id]
+        for product in self.inventory.values():
+            if product.name.lower() == name_or_id.lower():
+                return product
+        return None
