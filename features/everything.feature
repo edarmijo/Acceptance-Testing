@@ -15,3 +15,10 @@ Feature: Inventory Manager
     When the user lists all products
     Then the output should contain "Coffee"
     And the output should contain "Sugar"
+
+  Scenario: Update the quantity of a product
+    Given the inventory contains the following products:
+      | ID   | Name   | Price | Quantity |
+      | P001 | Coffee | 2.50  | 10       |
+    When the user updates the quantity of "Coffee" to 25
+    Then the inventory should show product "Coffee" with quantity 25
