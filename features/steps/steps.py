@@ -45,3 +45,32 @@ def step_inventory_contains_product(context, name):
     )
 
 
+@when('the user lists all products')
+def step_list_all_products(context):
+    context.products = context.manager.list_products()
+
+
+
+@then('the output should contain "{name}"')
+def step_output_contains(context, name):
+    product_names = [p.name for p in context.products]
+    assert name in product_names, (
+        f'"{name}" was not found in the product list. Found: {product_names}'
+    )
+
+@when('the user updates the quantity of "{name}" to {new_quantity:d}')
+def step_update_quantity(context, name, new_quantity):
+    context.output = context.manager.update_quantity(name, new_quantity)
+
+
+@then('the inventory should show product "{name}" with quantity {expected_quantity:d}')
+def step_check_product_quantity(context, name, expected_quantity):
+    for product in context.manager.list_products():
+        if product.name == name:
+            assert product.quantity == expected_quantity, (
+                f'Expected quantity {expected_quantity} for "{name}" '
+                f'but got {product.quantity}'
+            )
+            return
+    assert False, f'Product "{name}" was not found in the inventory'
+
