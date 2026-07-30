@@ -88,3 +88,28 @@ def step_inventory_not_contains(context, name):
     assert name not in product_names, (
         f'Product "{name}" was found in the inventory but should have been removed'
     )
+
+
+@when('the user searches for products with keyword "{keyword}"')
+def step_search_products(context, keyword):
+    context.search_results = context.manager.search_product(keyword)
+
+
+
+
+@then('the search results should contain {expected_count:d} products')
+def step_search_result_count(context, expected_count):
+    actual_count = len(context.search_results)
+    assert actual_count == expected_count, (
+        f'Expected {expected_count} search result(s) but got {actual_count}'
+    )
+
+
+
+
+@then('the search results should include "{name}"')
+def step_search_results_include(context, name):
+    result_names = [p.name for p in context.search_results]
+    assert name in result_names, (
+        f'"{name}" was not found in search results. Found: {result_names}'
+    )
