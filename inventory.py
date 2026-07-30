@@ -26,3 +26,22 @@ class InventoryManager:
         self.inventory[product_id] = Product(product_id, name, price, quantity)
         return f"Product '{name}' added successfully."
 
+    def list_products(self) -> list:
+            """Requirement 2: List all the products in the inventory"""
+            return list(self.inventory.values())
+
+    def update_quantity(self, name_or_id: str, new_quantity: int) -> str:
+        """Requirement 3: Update the quantity of a product"""
+        product = self._find_product(name_or_id)
+        if product:
+            product.quantity = new_quantity
+            return f"Updated quantity for '{product.name}' to {new_quantity}."
+        return f"Product '{name_or_id}' was not found."
+
+    def remove_product(self, name_or_id: str) -> str:
+        """Requirement 4: Remove a product from the inventory"""
+        product = self._find_product(name_or_id)
+        if product:
+            del self.inventory[product.product_id]
+            return f"Product '{product.name}' was removed."
+        return f"Product '{name_or_id}' was not found."
