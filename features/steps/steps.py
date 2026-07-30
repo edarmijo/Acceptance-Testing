@@ -74,3 +74,17 @@ def step_check_product_quantity(context, name, expected_quantity):
             return
     assert False, f'Product "{name}" was not found in the inventory'
 
+
+@when('the user removes the product "{name}"')
+def step_remove_product(context, name):
+    context.output = context.manager.remove_product(name)
+
+
+
+
+@then('the inventory should not contain "{name}"')
+def step_inventory_not_contains(context, name):
+    product_names = [p.name for p in context.manager.list_products()]
+    assert name not in product_names, (
+        f'Product "{name}" was found in the inventory but should have been removed'
+    )
