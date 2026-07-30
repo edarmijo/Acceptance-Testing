@@ -31,3 +31,15 @@ Feature: Inventory Manager
     When the user removes the product "Coffee"
     Then the inventory should not contain "Coffee"
 
+  Scenario: Search for products by name keyword
+    Given the inventory contains the following products:
+      | ID   | Name      | Price | Quantity |
+      | P001 | Coffee    | 2.50  | 10       |
+      | P002 | Cold Brew | 3.50  | 3        |
+      | P003 | Sugar     | 1.20  | 5        |
+    When the user searches for products with keyword "Co"
+    Then the search results should contain 2 products
+    And the search results should include "Coffee"
+    And the search results should include "Cold Brew"
+
+
