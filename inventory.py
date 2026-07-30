@@ -62,3 +62,69 @@ class InventoryManager:
             if product.name.lower() == name_or_id.lower():
                 return product
         return None
+        
+def main():
+    manager = InventoryManager()
+    
+    while True:
+        print("\n=== INVENTORY MANAGER ===")
+        print("1. Add Product")
+        print("2. List Products")
+        print("3. Update Product Quantity")
+        print("4. Remove Product")
+        print("5. Search Product (New Feature)")
+        print("6. Exit")
+        
+        choice = input("Select an option (1-6): ").strip()
+
+        if choice == '1':
+            p_id = input("Enter Product ID: ").strip()
+            name = input("Enter Product Name: ").strip()
+            try:
+                price = float(input("Enter Product Price: "))
+                quantity = int(input("Enter Product Quantity: "))
+                print(manager.add_product(p_id, name, price, quantity))
+            except ValueError:
+                print("Error: Price must be a number and Quantity must be an integer.")
+
+        elif choice == '2':
+            products = manager.list_products()
+            if not products:
+                print("Inventory is empty.")
+            else:
+                print("\nProducts:")
+                for prod in products:
+                    print(f"- {prod}")
+
+        elif choice == '3':
+            target = input("Enter Product Name or ID to update: ").strip()
+            try:
+                new_qty = int(input("Enter New Quantity: "))
+                print(manager.update_quantity(target, new_qty))
+            except ValueError:
+                print("Error: Quantity must be an integer.")
+
+        elif choice == '4':
+            target = input("Enter Product Name or ID to remove: ").strip()
+            print(manager.remove_product(target))
+
+        elif choice == '5':
+            query = input("Enter search keyword: ").strip()
+            results = manager.search_product(query)
+            if results:
+                print(f"\nFound {len(results)} product(s):")
+                for prod in results:
+                    print(f"- {prod}")
+            else:
+                print(f"No products found containing '{query}'.")
+
+        elif choice == '6':
+            print("Exiting application. Goodbye!")
+            break
+        else:
+            print("Invalid selection. Please enter a number between 1 and 6.")
+
+
+if __name__ == '__main__':
+    main()
+
